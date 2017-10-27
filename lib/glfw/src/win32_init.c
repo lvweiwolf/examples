@@ -62,6 +62,9 @@ BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID reserved)
 //
 static GLboolean initLibraries(void)
 {
+	
+	// winmm 名称为Windows Multimedia API描述是winmm.dll是Windows多媒体相关应用程序接口，
+	// 用于低档的音频和游戏手柄。
     _glfw.win32.winmm.instance = LoadLibraryW(L"winmm.dll");
     if (!_glfw.win32.winmm.instance)
     {
@@ -70,12 +73,16 @@ static GLboolean initLibraries(void)
         return GL_FALSE;
     }
 
+	// 查询指定的游戏杆设备以确定其性能
     _glfw.win32.winmm.joyGetDevCaps = (JOYGETDEVCAPS_T)
         GetProcAddress(_glfw.win32.winmm.instance, "joyGetDevCapsW");
+	//  查询指定的游戏杆设备的位置和活动性
     _glfw.win32.winmm.joyGetPos = (JOYGETPOS_T)
         GetProcAddress(_glfw.win32.winmm.instance, "joyGetPos");
+	// 查询一个游戏杆设备的位置和它的按扭状态
     _glfw.win32.winmm.joyGetPosEx = (JOYGETPOSEX_T)
         GetProcAddress(_glfw.win32.winmm.instance, "joyGetPosEx");
+	// 函数以毫秒计的系统时间。该时间为从系统开启算起所经过的时间。
     _glfw.win32.winmm.timeGetTime = (TIMEGETTIME_T)
         GetProcAddress(_glfw.win32.winmm.instance, "timeGetTime");
 
@@ -89,6 +96,7 @@ static GLboolean initLibraries(void)
         return GL_FALSE;
     }
 
+	// 加载用户界面dll
     _glfw.win32.user32.instance = LoadLibraryW(L"user32.dll");
     if (_glfw.win32.user32.instance)
     {
@@ -98,6 +106,7 @@ static GLboolean initLibraries(void)
             GetProcAddress(_glfw.win32.user32.instance, "ChangeWindowMessageFilterEx");
     }
 
+	// 加载DWM桌面管理系统dll
     _glfw.win32.dwmapi.instance = LoadLibraryW(L"dwmapi.dll");
     if (_glfw.win32.dwmapi.instance)
     {
@@ -336,6 +345,7 @@ int _glfwPlatformInit(void)
 
     createKeyTables();
 
+	// 不要对程序进行DWM虚拟化
     if (_glfw_SetProcessDPIAware)
         _glfw_SetProcessDPIAware();
 

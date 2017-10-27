@@ -272,6 +272,7 @@ static GLboolean choosePixelFormat(_GLFWwindow* window,
 //
 int _glfwInitContextAPI(void)
 {
+	// 初始化动态局部线程存储区
     if (!_glfwCreateContextTLS())
         return GL_FALSE;
 
