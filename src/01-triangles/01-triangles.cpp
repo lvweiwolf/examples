@@ -21,6 +21,7 @@ const GLuint  NumVertices = 6;
 // init
 //
 
+
 void
 init( void )
 {
